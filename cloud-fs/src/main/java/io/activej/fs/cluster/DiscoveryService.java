@@ -20,8 +20,6 @@ import io.activej.async.callback.Callback;
 import io.activej.fs.ActiveFs;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -52,7 +50,7 @@ public interface DiscoveryService {
 	 * @return a constant discovery service
 	 */
 	static DiscoveryService constant(Map<Object, ActiveFs> partitions) {
-		Map<Object, ActiveFs> constant = Collections.unmodifiableMap(new HashMap<>(partitions));
+		Map<Object, ActiveFs> constant = Map.copyOf(partitions);
 		return (previous, cb) -> {
 			if (!constant.equals(previous)) {
 				cb.accept(constant, null);

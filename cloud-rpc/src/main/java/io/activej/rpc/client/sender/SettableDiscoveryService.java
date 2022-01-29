@@ -22,7 +22,9 @@ import io.activej.eventloop.Eventloop;
 import org.jetbrains.annotations.Nullable;
 
 import java.net.InetSocketAddress;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 import static io.activej.common.Checks.checkState;
 
@@ -34,7 +36,7 @@ public final class SettableDiscoveryService implements DiscoveryService {
 	private final List<Callback<Map<Object, InetSocketAddress>>> callbacks = new ArrayList<>();
 
 	private SettableDiscoveryService(Map<Object, InetSocketAddress> addressMap) {
-		this.addressMap = Collections.unmodifiableMap(new HashMap<>(addressMap));
+		this.addressMap = Map.copyOf(addressMap);
 	}
 
 	public static SettableDiscoveryService create(Map<Object, InetSocketAddress> addressMap) {
@@ -58,7 +60,7 @@ public final class SettableDiscoveryService implements DiscoveryService {
 
 		if (this.addressMap.equals(addressMap)) return;
 
-		this.addressMap = Collections.unmodifiableMap(new HashMap<>(addressMap));
+		this.addressMap = Map.copyOf(addressMap);
 		List<Callback<Map<Object, InetSocketAddress>>> callbacks = new ArrayList<>(this.callbacks);
 		this.callbacks.clear();
 		callbacks.forEach(cb -> cb.accept(addressMap, null));

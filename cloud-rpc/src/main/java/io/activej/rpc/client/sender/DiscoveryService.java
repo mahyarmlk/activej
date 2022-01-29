@@ -20,8 +20,6 @@ import io.activej.async.callback.Callback;
 import org.jetbrains.annotations.Nullable;
 
 import java.net.InetSocketAddress;
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -54,7 +52,7 @@ public interface DiscoveryService {
 	 * @return a constant discovery service
 	 */
 	static DiscoveryService constant(Map<Object, InetSocketAddress> addresses) {
-		Map<Object, InetSocketAddress> constantAddresses = Collections.unmodifiableMap(new HashMap<>(addresses));
+		Map<Object, InetSocketAddress> constantAddresses = Map.copyOf(addresses);
 		return (previous, cb) -> {
 			if (!constantAddresses.equals(previous)) {
 				cb.accept(constantAddresses, null);

@@ -13,14 +13,8 @@ import io.activej.service.ServiceGraphModule;
 
 import java.util.List;
 
-import static java.util.Arrays.asList;
-import static java.util.Collections.unmodifiableList;
-
 public final class AdderServerLauncher extends Launcher {
-	public static final List<Class<?>> MESSAGE_TYPES = unmodifiableList(asList(
-			GetRequest.class, GetResponse.class,
-			AddRequest.class, AddResponse.class
-	));
+	public static final List<Class<?>> MESSAGE_TYPES = List.of(GetRequest.class, GetResponse.class, AddRequest.class, AddResponse.class);
 
 	@Override
 	protected Module getModule() {

@@ -20,8 +20,6 @@ import io.activej.async.callback.Callback;
 import io.activej.crdt.storage.CrdtStorage;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.Map;
 
 public interface DiscoveryService<K extends Comparable<K>, S, P extends Comparable<P>> {
@@ -32,7 +30,7 @@ public interface DiscoveryService<K extends Comparable<K>, S, P extends Comparab
 	);
 
 	static <K extends Comparable<K>, S, P extends Comparable<P>> DiscoveryService<K, S, P> constant(Map<P, ? extends CrdtStorage<K, S>> partitions) {
-		Map<P, ? extends CrdtStorage<K, S>> constant = Collections.unmodifiableMap(new HashMap<>(partitions));
+		Map<P, ? extends CrdtStorage<K, S>> constant = Map.copyOf(partitions);
 		return (previous, cb) -> {
 			if (!constant.equals(previous)) {
 				cb.accept(constant, null);

@@ -23,6 +23,7 @@ import static java.util.Arrays.asList;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+@Ignore
 @SuppressWarnings("BusyWait")
 public final class DiscoveryServiceTest {
 	private static final int NUMBER_OF_SERVERS = 5;
