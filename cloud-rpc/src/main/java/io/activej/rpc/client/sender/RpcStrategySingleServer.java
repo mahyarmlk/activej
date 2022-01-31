@@ -20,8 +20,7 @@ import io.activej.rpc.client.RpcClientConnectionPool;
 import org.jetbrains.annotations.NotNull;
 
 import java.net.InetSocketAddress;
-
-import static io.activej.common.Utils.mapOf;
+import java.util.Map;
 
 public final class RpcStrategySingleServer implements RpcStrategy {
 
@@ -37,7 +36,7 @@ public final class RpcStrategySingleServer implements RpcStrategy {
 
 	@Override
 	public DiscoveryService getDiscoveryService() {
-		return DiscoveryService.constant(mapOf(address, address));
+        return DiscoveryService.constant(Map.of(address, address));
 	}
 
 	@Override

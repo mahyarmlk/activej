@@ -18,7 +18,6 @@ import java.util.Map;
 import java.util.UUID;
 
 import static adder.AdderCommands.*;
-import static io.activej.common.Utils.mapOf;
 
 public class AdderServerModule extends AbstractModule {
 
@@ -46,7 +45,7 @@ public class AdderServerModule extends AbstractModule {
 			WriteAheadLog<Long, DetailedSumsCrdtState> writeAheadLog,
 			IdSequentialExecutor<Long> seqExecutor
 	) {
-		return mapOf(
+		return Map.of(
 				AddRequest.class, (RpcRequestHandler<AddRequest, AddResponse>) request -> {
 					long userId = request.getUserId();
 					return seqExecutor.execute(userId, () -> map.get(userId)
@@ -61,12 +60,11 @@ public class AdderServerModule extends AbstractModule {
 										.map($ -> AddResponse.INSTANCE);
 							}));
 				},
-				GetRequest.class, (RpcRequestHandler<GetRequest, GetResponse>) request ->
-						map.get(request.getUserId())
+				GetRequest.class, (RpcRequestHandler<GetRequest, GetResponse>) request1 ->
+						map.get(request1.getUserId())
 								.mapIfNonNull(SimpleSumsCrdtState::value)
 								.mapIfNull(() -> 0f)
-								.map(GetResponse::new)
-		);
+								.map(GetResponse::new));
 	}
 
 	@Provides

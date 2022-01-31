@@ -34,7 +34,6 @@ import io.activej.promise.Promise;
 
 import java.util.*;
 
-import static io.activej.common.Utils.mapOf;
 import static io.activej.fs.http.FsCommand.DOWNLOAD;
 import static io.activej.fs.http.FsCommand.UPLOAD;
 import static io.activej.http.ContentTypes.HTML_UTF_8;
@@ -78,11 +77,11 @@ public final class ActiveFsGuiServlet implements WithInitializer<ActiveFsGuiServ
 					String dir = decodeDir(request);
 					return fs.list(dir + "**")
 							.map(
-									files -> !dir.isEmpty() && files.isEmpty() ?
-											redirect302("/") :
-											HttpResponse.ok200()
-													.withHeader(CONTENT_TYPE, ofContentType(HTML_UTF_8))
-													.withBody(applyTemplate(mustache, mapOf(
+                                    files -> !dir.isEmpty() && files.isEmpty() ?
+                                            redirect302("/") :
+                                            HttpResponse.ok200()
+                                                    .withHeader(CONTENT_TYPE, ofContentType(HTML_UTF_8))
+                                                    .withBody(applyTemplate(mustache, Map.of(
 															"title", title,
 															"dirContents", filesToDirView(new HashMap<>(files), dir),
 															"breadcrumbs", dirToBreadcrumbs(dir)))),
