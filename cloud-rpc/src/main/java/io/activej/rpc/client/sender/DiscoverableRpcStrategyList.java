@@ -19,7 +19,10 @@ package io.activej.rpc.client.sender;
 import io.activej.rpc.client.RpcClientConnectionPool;
 
 import java.net.InetSocketAddress;
-import java.util.*;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import static java.util.stream.Collectors.toList;
 
@@ -35,7 +38,7 @@ final class DiscoverableRpcStrategyList implements RpcStrategyList {
 	}
 
 	static DiscoverableRpcStrategyList create(DiscoveryService discoveryService) {
-		RpcStrategyListFinal strategyList = new RpcStrategyListFinal(Collections.emptyList());
+		RpcStrategyListFinal strategyList = new RpcStrategyListFinal(List.of());
 		DiscoverableRpcStrategyList list = new DiscoverableRpcStrategyList(strategyList, discoveryService);
 		list.rediscover();
 		return list;

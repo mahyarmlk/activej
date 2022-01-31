@@ -11,7 +11,6 @@ import io.activej.rpc.client.RpcClient;
 import io.activej.rpc.hash.ShardingFunction;
 
 import java.net.InetSocketAddress;
-import java.util.Collections;
 import java.util.List;
 import java.util.Scanner;
 
@@ -35,7 +34,7 @@ public final class AdderClientLauncher extends CrdtRpcClientLauncher {
 
 	@Provides
 	ShardingFunction<?> shardingFunction(Config config) {
-		List<InetSocketAddress> addresses = config.get(ofList(ofInetSocketAddress()), "addresses", Collections.emptyList());
+		List<InetSocketAddress> addresses = config.get(ofList(ofInetSocketAddress()), "addresses", List.of());
 		if (addresses.isEmpty()) {
 			return $ -> {
 				throw new IllegalStateException();

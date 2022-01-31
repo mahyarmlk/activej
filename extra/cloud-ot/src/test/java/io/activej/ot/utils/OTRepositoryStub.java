@@ -12,7 +12,6 @@ import java.util.function.Supplier;
 import java.util.stream.Stream;
 
 import static io.activej.common.Checks.checkNotNull;
-import static java.util.Collections.emptyList;
 import static java.util.stream.Collectors.toSet;
 
 public final class OTRepositoryStub<K, D> implements OTRepository<K, D> {
@@ -53,7 +52,7 @@ public final class OTRepositoryStub<K, D> implements OTRepository<K, D> {
 		doPushAndUpdateHeads(commits);
 		for (OTCommit<K, D> commit : commits) {
 			if (commit.getLevel() == 1L) {
-				doSaveSnapshot(commit.getId(), emptyList());
+				doSaveSnapshot(commit.getId(), List.of());
 			}
 		}
 	}

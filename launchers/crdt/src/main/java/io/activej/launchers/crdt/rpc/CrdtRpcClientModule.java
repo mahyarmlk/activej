@@ -28,7 +28,6 @@ import io.activej.rpc.client.sender.RpcStrategyList;
 import io.activej.rpc.hash.ShardingFunction;
 
 import java.net.InetSocketAddress;
-import java.util.Collections;
 import java.util.List;
 
 import static io.activej.config.Config.ofClassPathProperties;
@@ -62,7 +61,7 @@ public class CrdtRpcClientModule extends AbstractModule {
 
 	@Provides
 	RpcStrategy strategy(Config config, OptionalDependency<ShardingFunction<?>> shardingFn) {
-		List<InetSocketAddress> addresses = config.get(ofList(ofInetSocketAddress()), "addresses", Collections.emptyList());
+		List<InetSocketAddress> addresses = config.get(ofList(ofInetSocketAddress()), "addresses", List.of());
 
 		if (addresses.isEmpty()) {
 			InetSocketAddress address = config.get(ofInetSocketAddress(), "address");
