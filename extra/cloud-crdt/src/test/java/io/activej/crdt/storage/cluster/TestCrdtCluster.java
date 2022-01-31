@@ -28,7 +28,6 @@ import static io.activej.promise.TestUtils.await;
 import static io.activej.serializer.BinarySerializers.INT_SERIALIZER;
 import static io.activej.serializer.BinarySerializers.UTF8_SERIALIZER;
 import static io.activej.test.TestUtils.getFreePort;
-import static java.util.Collections.singleton;
 import static org.junit.Assert.assertEquals;
 
 public final class TestCrdtCluster {
@@ -113,9 +112,9 @@ public final class TestCrdtCluster {
 		for (int i = 0; i < CLIENT_SERVER_PAIRS; i++) {
 			CrdtStorageMap<String, TimestampContainer<Set<Integer>>> storage = CrdtStorageMap.create(eventloop, union);
 
-			storage.put(key1, TimestampContainer.now(new HashSet<>(singleton(i))));
-			storage.put(key2, TimestampContainer.now(new HashSet<>(singleton(i / 2))));
-			storage.put(key3, TimestampContainer.now(new HashSet<>(singleton(123))));
+			storage.put(key1, TimestampContainer.now(new HashSet<>(Set.of(i))));
+			storage.put(key2, TimestampContainer.now(new HashSet<>(Set.of(i / 2))));
+			storage.put(key3, TimestampContainer.now(new HashSet<>(Set.of(123))));
 
 			InetSocketAddress address = new InetSocketAddress(getFreePort());
 			CrdtServer<String, TimestampContainer<Set<Integer>>> server = CrdtServer.create(eventloop, storage, serializer);
