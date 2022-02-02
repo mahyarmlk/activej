@@ -21,7 +21,6 @@ import static io.activej.common.Checks.checkArgument;
 import static io.activej.common.Utils.difference;
 import static io.activej.common.Utils.first;
 import static io.activej.ot.TransformResult.*;
-import static java.util.Arrays.asList;
 import static java.util.stream.Collectors.toList;
 import static java.util.stream.Collectors.toSet;
 
@@ -54,8 +53,8 @@ public class Utils {
 				.withSquashFunction(TestSet.class, TestAdd.class, (op1, op2) -> set(op1.getPrev(), op1.getNext() + op2.getDelta()))
 				.withEmptyPredicate(TestAdd.class, add -> add.getDelta() == 0)
 				.withEmptyPredicate(TestSet.class, set -> set.getPrev() == set.getNext())
-				.withInvertFunction(TestAdd.class, op -> asList(op.inverse()))
-				.withInvertFunction(TestSet.class, op -> asList(set(op.getNext(), op.getPrev())));
+				.withInvertFunction(TestAdd.class, op -> List.of(op.inverse()))
+				.withInvertFunction(TestSet.class, op -> List.of(set(op.getNext(), op.getPrev())));
 	}
 
 	static final class JsonConverters {

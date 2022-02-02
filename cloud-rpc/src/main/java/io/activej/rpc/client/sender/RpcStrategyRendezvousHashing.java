@@ -26,7 +26,10 @@ import org.jetbrains.annotations.Nullable;
 import org.jetbrains.annotations.VisibleForTesting;
 
 import java.net.InetSocketAddress;
-import java.util.*;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import static io.activej.common.Checks.checkArgument;
@@ -78,7 +81,7 @@ public final class RpcStrategyRendezvousHashing implements RpcStrategy {
 	}
 
 	public RpcStrategyRendezvousHashing withShards(InetSocketAddress... addresses) {
-		return withShards(Arrays.asList(addresses));
+		return withShards(List.of(addresses));
 	}
 
 	public RpcStrategyRendezvousHashing withShards(List<InetSocketAddress> addresses) {

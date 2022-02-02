@@ -26,7 +26,6 @@ import org.rocksdb.RocksDB;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.concurrent.Executor;
@@ -73,7 +72,7 @@ public class CrdtStorageAPITest {
 
 	@Parameters(name = "{0}")
 	public static Collection<Object[]> getParameters() {
-		return Arrays.asList(
+		return List.of(
 				new Object[]{
 						"FsCrdtClient",
 						(ICrdtClientFactory<String, TimestampContainer<Integer>>) (executor, testFolder, crdtFunction) -> {
@@ -98,7 +97,7 @@ public class CrdtStorageAPITest {
 
 	@Test
 	public void testUploadDownload() {
-		List<CrdtData<String, TimestampContainer<Integer>>> expected = Arrays.asList(
+		List<CrdtData<String, TimestampContainer<Integer>>> expected = List.of(
 				new CrdtData<>("test_0", new TimestampContainer<>(123, 0)),
 				new CrdtData<>("test_1", new TimestampContainer<>(123, 345)),
 				new CrdtData<>("test_2", new TimestampContainer<>(123, 44)),
@@ -126,7 +125,7 @@ public class CrdtStorageAPITest {
 
 	@Test
 	public void testDelete() {
-		List<CrdtData<String, TimestampContainer<Integer>>> expected = Arrays.asList(
+		List<CrdtData<String, TimestampContainer<Integer>>> expected = List.of(
 				new CrdtData<>("test_1", new TimestampContainer<>(123, 2)),
 				new CrdtData<>("test_3", new TimestampContainer<>(123, 4))
 		);

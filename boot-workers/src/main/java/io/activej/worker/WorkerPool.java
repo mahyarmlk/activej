@@ -45,7 +45,7 @@ public final class WorkerPool {
 
 		private Instances(Object[] instances) {
 			this.instances = instances;
-			this.list = (List<T>) asList(instances);
+			this.list = (List<T>) List.of(instances);
 		}
 
 		public Object[] getArray() {

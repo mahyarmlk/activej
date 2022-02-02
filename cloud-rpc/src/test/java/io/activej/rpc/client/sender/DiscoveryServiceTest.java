@@ -19,7 +19,6 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutionException;
 
 import static io.activej.test.TestUtils.getFreePort;
-import static java.util.Arrays.asList;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
@@ -111,12 +110,12 @@ public final class DiscoveryServiceTest {
 			request(client, "second_" + i);
 		}
 
-		assertEquals(asList("first_1", "first_3", "first_5", "first_7", "first_9"), serverStorages.get("server_0"));
-		assertEquals(asList("first_0", "first_2", "first_4", "first_6", "first_8"), serverStorages.get("server_1"));
+		assertEquals(List.of("first_1", "first_3", "first_5", "first_7", "first_9"), serverStorages.get("server_0"));
+		assertEquals(List.of("first_0", "first_2", "first_4", "first_6", "first_8"), serverStorages.get("server_1"));
 
-		assertEquals(asList("second_0", "second_3", "second_6", "second_9"), serverStorages.get("server_2"));
-		assertEquals(asList("second_1", "second_4", "second_7"), serverStorages.get("server_3"));
-		assertEquals(asList("second_2", "second_5", "second_8"), serverStorages.get("server_4"));
+		assertEquals(List.of("second_0", "second_3", "second_6", "second_9"), serverStorages.get("server_2"));
+		assertEquals(List.of("second_1", "second_4", "second_7"), serverStorages.get("server_3"));
+		assertEquals(List.of("second_2", "second_5", "second_8"), serverStorages.get("server_4"));
 		client.stopFuture().get();
 
 		for (RpcServer server : servers.values()) {
@@ -162,12 +161,12 @@ public final class DiscoveryServiceTest {
 			request(client, "second_" + i);
 		}
 
-		assertEquals(asList("first_0", "first_2", "first_4", "first_6", "first_8"), serverStorages.get("server_0"));
-		assertEquals(asList("first_1", "first_3", "first_5", "first_7", "first_9"), serverStorages.get("server_1"));
+		assertEquals(List.of("first_0", "first_2", "first_4", "first_6", "first_8"), serverStorages.get("server_0"));
+		assertEquals(List.of("first_1", "first_3", "first_5", "first_7", "first_9"), serverStorages.get("server_1"));
 
-		assertEquals(asList("second_0", "second_3", "second_6", "second_9"), serverStorages.get("server_2"));
-		assertEquals(asList("second_1", "second_4", "second_7"), serverStorages.get("server_3"));
-		assertEquals(asList("second_2", "second_5", "second_8"), serverStorages.get("server_4"));
+		assertEquals(List.of("second_0", "second_3", "second_6", "second_9"), serverStorages.get("server_2"));
+		assertEquals(List.of("second_1", "second_4", "second_7"), serverStorages.get("server_3"));
+		assertEquals(List.of("second_2", "second_5", "second_8"), serverStorages.get("server_4"));
 		client.stopFuture().get();
 
 		for (RpcServer server : servers.values()) {

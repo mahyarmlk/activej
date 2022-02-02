@@ -41,7 +41,6 @@ import static io.activej.promise.TestUtils.await;
 import static io.activej.serializer.BinarySerializers.INT_SERIALIZER;
 import static io.activej.serializer.BinarySerializers.LONG_SERIALIZER;
 import static java.nio.file.StandardOpenOption.WRITE;
-import static java.util.Arrays.asList;
 import static java.util.stream.Collectors.toSet;
 import static org.junit.Assert.*;
 
@@ -89,7 +88,7 @@ public class FileWriteAheadLogTest {
 	@Test
 	public void singleFlushSequential() {
 		await(wal.start());
-		List<CrdtData<Long, GSet<Integer>>> expected = asList(
+		List<CrdtData<Long, GSet<Integer>>> expected = List.of(
 				new CrdtData<>(1L, GSet.of(1, 2, 3, 6, 9, 10, 11)),
 				new CrdtData<>(2L, GSet.of(-12, 0, 2, 3, 100, 200))
 		);
@@ -108,7 +107,7 @@ public class FileWriteAheadLogTest {
 	@Test
 	public void singleFlushConsecutive() {
 		await(wal.start());
-		List<CrdtData<Long, GSet<Integer>>> expected = asList(
+		List<CrdtData<Long, GSet<Integer>>> expected = List.of(
 				new CrdtData<>(1L, GSet.of(1, 2, 3, 6, 9, 10, 11)),
 				new CrdtData<>(2L, GSet.of(-12, 0, 2, 3, 100, 200))
 		);
@@ -129,11 +128,11 @@ public class FileWriteAheadLogTest {
 	@Test
 	public void multipleFlushesSequential() {
 		await(wal.start());
-		List<CrdtData<Long, GSet<Integer>>> expectedAfterFlush1 = asList(
+		List<CrdtData<Long, GSet<Integer>>> expectedAfterFlush1 = List.of(
 				new CrdtData<>(1L, GSet.of(1, 2, 3, 6)),
 				new CrdtData<>(2L, GSet.of(-12, 0, 200))
 		);
-		List<CrdtData<Long, GSet<Integer>>> expectedAfterFlush2 = asList(
+		List<CrdtData<Long, GSet<Integer>>> expectedAfterFlush2 = List.of(
 				new CrdtData<>(1L, GSet.of(1, 2, 3, 6, 9, 10, 11)),
 				new CrdtData<>(2L, GSet.of(-12, 0, 2, 3, 100, 200))
 		);
@@ -156,7 +155,7 @@ public class FileWriteAheadLogTest {
 	@Test
 	public void multipleFlushesConsecutive() {
 		await(wal.start());
-		List<CrdtData<Long, GSet<Integer>>> expected = asList(
+		List<CrdtData<Long, GSet<Integer>>> expected = List.of(
 				new CrdtData<>(1L, GSet.of(1, 2, 3, 6, 9, 10, 11)),
 				new CrdtData<>(2L, GSet.of(-12, 0, 2, 3, 100, 200))
 		);
@@ -176,7 +175,7 @@ public class FileWriteAheadLogTest {
 
 	@Test
 	public void startupWithRemainingWALFiles() throws IOException {
-		List<CrdtData<Long, GSet<Integer>>> expected = asList(
+		List<CrdtData<Long, GSet<Integer>>> expected = List.of(
 				new CrdtData<>(1L, GSet.of(1, 2, 3, 6, 9, 10, 11)),
 				new CrdtData<>(2L, GSet.of(-12, 0, 2, 3, 100, 200))
 		);
@@ -210,7 +209,7 @@ public class FileWriteAheadLogTest {
 
 	@Test
 	public void startupWithMalformedWALFiles() throws IOException {
-		List<CrdtData<Long, GSet<Integer>>> expected = asList(
+		List<CrdtData<Long, GSet<Integer>>> expected = List.of(
 				new CrdtData<>(1L, GSet.of(1, 2, 3, 6, 9, 10, 11)),
 				new CrdtData<>(2L, GSet.of(-124, -12, 0, 2, 3, 4, 45, 100, 200))
 		);
@@ -250,7 +249,7 @@ public class FileWriteAheadLogTest {
 
 	@Test
 	public void startupWithEmptyWALFiles() throws IOException {
-		List<CrdtData<Long, GSet<Integer>>> expected = asList(
+		List<CrdtData<Long, GSet<Integer>>> expected = List.of(
 				new CrdtData<>(1L, GSet.of(-53, 1, 2, 3, 6, 23)),
 				new CrdtData<>(2L, GSet.of(-12, 0, 12, 100, 200))
 		);

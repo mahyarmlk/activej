@@ -50,7 +50,7 @@ public final class TestRpcClientShutdown {
 	public void testServerOnClientShutdown() throws IOException {
 		Eventloop eventloop = Eventloop.getCurrentEventloop();
 		Executor executor = Executors.newSingleThreadExecutor();
-		List<Class<?>> messageTypes = asList(Request.class, Response.class);
+		List<Class<?>> messageTypes = List.of(Request.class, Response.class);
 
 		RpcServer rpcServer = RpcServer.create(eventloop)
 				.withMessageTypes(messageTypes)

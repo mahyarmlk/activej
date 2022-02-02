@@ -255,7 +255,7 @@ public final class CrdtStorageFs<K extends Comparable<K>, S> implements CrdtStor
 								.filter(entry -> entry.getValue().getTimestamp() > barrier)
 								.map(entry -> ChannelSupplier.ofPromise(consolidationFolderFs.download(entry.getKey()))
 										.toCollector(ByteBufs.collector())
-										.whenResult(byteBuf -> blacklist.addAll(Arrays.asList(byteBuf.asString(UTF_8).split("\n"))))
+										.whenResult(byteBuf -> blacklist.addAll(List.of(byteBuf.asString(UTF_8).split("\n"))))
 										.toVoid())))
 				.then(() -> fs.list("*"))
 				.then(list -> {

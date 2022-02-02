@@ -41,7 +41,7 @@ public final class ChannelExample {
 	public static void main(String[] args) {
 		Eventloop eventloop = Eventloop.create().withCurrentThread();
 		supplierOfValues();
-		supplierOfList(asList("One", "Two", "Three"));
+		supplierOfList(List.of("One", "Two", "Three"));
 		map();
 		toCollector();
 		filter();

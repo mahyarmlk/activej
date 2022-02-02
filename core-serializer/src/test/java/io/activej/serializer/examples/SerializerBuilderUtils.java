@@ -14,7 +14,7 @@ import static java.lang.String.format;
 import static java.util.Arrays.asList;
 
 public class SerializerBuilderUtils {
-	public static final List<Class<?>> TYPES = asList(
+	public static final List<Class<?>> TYPES = List.of(
 			byte.class, short.class, int.class, long.class, float.class, double.class, char.class, Object.class
 	);
 

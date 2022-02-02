@@ -40,7 +40,7 @@ public final class TPSet<E> implements Set<E>, CrdtMergable<TPSet<E>> {
 	@SafeVarargs
 	public static <T> TPSet<T> of(T... items) {
 		TPSet<T> set = new TPSet<>();
-		set.addAll(Arrays.asList(items));
+		set.addAll(List.of(items));
 		return set;
 	}
 

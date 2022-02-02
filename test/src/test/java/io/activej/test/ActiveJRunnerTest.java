@@ -38,7 +38,7 @@ public class ActiveJRunnerTest {
 
 		@Provides
 		<T> List<T> tripleList(T instance) {
-			return asList(instance, instance, instance);
+			return List.of(instance, instance, instance);
 		}
 	}
 
@@ -59,8 +59,8 @@ public class ActiveJRunnerTest {
 
 	@Test
 	public void testCommon(Injector injector) {
-		assertEquals(asList(HELLO, HELLO, HELLO), hellos);
-		assertEquals(asList(42, 42, 42), numbers);
+		assertEquals(List.of(HELLO, HELLO, HELLO), hellos);
+		assertEquals(List.of(42, 42, 42), numbers);
 
 		assertEquals(PROVIDES_STRING, injector.getInstance(Key.of(String.class, PROVIDES_STRING)));
 	}
@@ -69,7 +69,7 @@ public class ActiveJRunnerTest {
 	public void testProvides(@Named(PROVIDES_STRING) String s) {
 		assertEquals(PROVIDES_STRING, s);
 
-		assertEquals(asList(HELLO, HELLO, HELLO), hellos);
+		assertEquals(List.of(HELLO, HELLO, HELLO), hellos);
 	}
 
 	static class TestModule extends AbstractModule {
@@ -85,7 +85,7 @@ public class ActiveJRunnerTest {
 	public void testCustom(@Named(CUSTOM) String s2) {
 		assertEquals(CUSTOM, s2);
 
-		assertEquals(asList(HELLO, HELLO, HELLO), hellos);
+		assertEquals(List.of(HELLO, HELLO, HELLO), hellos);
 	}
 
 	public static class InjectableClass {

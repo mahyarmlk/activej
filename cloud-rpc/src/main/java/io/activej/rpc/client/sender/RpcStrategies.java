@@ -25,7 +25,6 @@ import java.net.InetSocketAddress;
 import java.util.List;
 
 import static io.activej.common.Checks.checkArgument;
-import static java.util.Arrays.asList;
 
 /**
  * Strategies used in RPC can be divided in three following categories:
@@ -44,7 +43,7 @@ public final class RpcStrategies {
 	}
 
 	public static RpcStrategyList servers(InetSocketAddress... addresses) {
-		return servers(asList(addresses));
+		return servers(List.of(addresses));
 	}
 
 	public static RpcStrategyList servers(List<InetSocketAddress> addresses) {
@@ -56,7 +55,7 @@ public final class RpcStrategies {
 	}
 
 	public static RpcStrategyFirstAvailable firstAvailable(RpcStrategy... senders) {
-		return firstAvailable(asList(senders));
+		return firstAvailable(List.of(senders));
 	}
 
 	public static RpcStrategyFirstAvailable firstAvailable(List<RpcStrategy> strategies) {
@@ -68,7 +67,7 @@ public final class RpcStrategies {
 	}
 
 	public static RpcStrategyFirstValidResult firstValidResult(RpcStrategy... senders) {
-		return firstValidResult(asList(senders));
+		return firstValidResult(List.of(senders));
 	}
 
 	public static RpcStrategyFirstValidResult firstValidResult(List<RpcStrategy> senders) {
@@ -80,7 +79,7 @@ public final class RpcStrategies {
 	}
 
 	public static RpcStrategyRoundRobin roundRobin(RpcStrategy... senders) {
-		return roundRobin(asList(senders));
+		return roundRobin(List.of(senders));
 	}
 
 	public static RpcStrategyRoundRobin roundRobin(List<RpcStrategy> senders) {
@@ -93,7 +92,7 @@ public final class RpcStrategies {
 
 	public static RpcStrategySharding sharding(ShardingFunction<?> hashFunction,
 			RpcStrategy... senders) {
-		return sharding(hashFunction, asList(senders));
+		return sharding(hashFunction, List.of(senders));
 	}
 
 	public static RpcStrategySharding sharding(@NotNull ShardingFunction<?> hashFunction,

@@ -247,7 +247,7 @@ public final class ServiceGraph implements WithInitializer<ServiceGraph>, Concur
 		if (service != null) {
 			services.put(key, service);
 		}
-		add(key, asList(dependencies));
+		add(key, List.of(dependencies));
 	}
 
 	public void add(Key key, Collection<Key> dependencies) {
@@ -258,7 +258,7 @@ public final class ServiceGraph implements WithInitializer<ServiceGraph>, Concur
 	}
 
 	public void add(Key key, Key first, Key... rest) {
-		add(key, concat(List.of(first), asList(rest)));
+		add(key, concat(List.of(first), List.of(rest)));
 	}
 
 	public synchronized boolean isStarted() {

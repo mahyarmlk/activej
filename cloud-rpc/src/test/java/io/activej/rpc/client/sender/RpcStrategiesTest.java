@@ -14,7 +14,6 @@ import static io.activej.rpc.client.sender.Callbacks.assertNoCalls;
 import static io.activej.rpc.client.sender.Callbacks.ignore;
 import static io.activej.rpc.client.sender.RpcStrategies.*;
 import static io.activej.test.TestUtils.getFreePort;
-import static java.util.Arrays.asList;
 import static org.junit.Assert.assertEquals;
 
 @SuppressWarnings("ConstantConditions")
@@ -60,7 +59,7 @@ public class RpcStrategiesTest {
 		}
 
 		List<RpcSenderStub> connections =
-				asList(connection1, connection2, connection3, connection4, connection5);
+				List.of(connection1, connection2, connection3, connection4, connection5);
 		for (int i = 0; i < 5; i++) {
 			assertEquals(iterations / 5, connections.get(i).getRequests());
 		}

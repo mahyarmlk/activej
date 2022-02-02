@@ -22,7 +22,7 @@ public final class TypeTokenExample {
 			@Override
 			protected void configure() {
 				bind(String.class).toInstance("hello");
-				bind(new Key<List<String>>() {}).to(s -> asList(s, s, s), String.class);
+				bind(new Key<List<String>>() {}).to(s -> List.of(s, s, s), String.class);
 			}
 		});
 
