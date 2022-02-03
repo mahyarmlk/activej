@@ -13,7 +13,6 @@ import org.junit.ClassRule;
 import org.junit.Test;
 
 import java.util.*;
-import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import static io.activej.promise.TestUtils.await;
@@ -39,7 +38,7 @@ public final class RepartitionTest {
 		String localPartitionId = "client_0";
 		List<CrdtData<String, TimestampContainer<Integer>>> data = IntStream.range(1, 100)
 				.mapToObj(i -> new CrdtData<>("test" + i, TimestampContainer.now(i)))
-				.collect(Collectors.toList());
+				.toList();
 		await(StreamSupplier.ofIterator(data.iterator())
 				.streamTo(StreamConsumer.ofPromise(clients.get(localPartitionId).upload())));
 

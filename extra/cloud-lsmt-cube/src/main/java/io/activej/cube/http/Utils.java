@@ -25,8 +25,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Pattern;
 
-import static java.util.stream.Collectors.toList;
-
 class Utils {
 	static final String MEASURES_PARAM = "measures";
 	static final String ATTRIBUTES_PARAM = "attributes";
@@ -55,7 +53,7 @@ class Utils {
 		List<String> tokens = splitter.splitAsStream(string)
 				.map(String::trim)
 				.filter(s -> !s.isEmpty())
-				.collect(toList());
+				.toList();
 		for (String s : tokens) {
 			int i = s.indexOf(':');
 			if (i == -1) {

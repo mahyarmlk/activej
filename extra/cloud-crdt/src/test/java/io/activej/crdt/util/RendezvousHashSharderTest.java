@@ -4,8 +4,8 @@ import io.activej.common.ref.RefInt;
 import org.junit.Test;
 
 import java.util.*;
-import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 import static io.activej.common.Utils.keysToMap;
 import static java.util.stream.Collectors.toSet;
@@ -17,9 +17,7 @@ public class RendezvousHashSharderTest {
 	@Test
 	public void testSharder() {
 		RefInt index = new RefInt(0);
-		Map<String, Integer> partitionsWithIndexes = keysToMap(Set.of("one", "two", "three", "four", "five")
-				.stream()
-				.sorted(), s -> index.value++);
+		Map<String, Integer> partitionsWithIndexes = keysToMap(Stream.of("one", "two", "three", "four", "five").sorted(), s -> index.value++);
 		Set<String> partitions = new HashSet<>(partitionsWithIndexes.keySet());
 		RendezvousHashSharder<String> sharder = RendezvousHashSharder.create(partitions, 3);
 
@@ -66,7 +64,7 @@ public class RendezvousHashSharderTest {
 
 		List<int[]> shards = IntStream.range(0, 100)
 				.mapToObj(sharder::shard)
-				.collect(Collectors.toList());
+				.toList();
 		int[] first = shards.get(0);
 		assertTrue(shards.stream().allMatch(ints -> Arrays.equals(first, ints)));
 	}
