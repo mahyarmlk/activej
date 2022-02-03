@@ -107,13 +107,5 @@ public final class RendezvousHashSharder<P extends Comparable<P>> implements Wit
 		throw new NoSuchElementException("Cannot find partition: " + partition);
 	}
 
-	private static final class ObjWithIndex<P extends Comparable<P>> {
-		final P object;
-		final int index;
-
-		ObjWithIndex(P object, int index) {
-			this.object = object;
-			this.index = index;
-		}
-	}
+	private record ObjWithIndex<P extends Comparable<P>>(P object, int index) {}
 }

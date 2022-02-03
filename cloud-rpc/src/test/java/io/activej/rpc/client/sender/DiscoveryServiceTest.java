@@ -5,8 +5,7 @@ import io.activej.promise.Promise;
 import io.activej.rpc.client.RpcClient;
 import io.activej.rpc.hash.ShardingFunction;
 import io.activej.rpc.server.RpcServer;
-import io.activej.serializer.annotations.Deserialize;
-import io.activej.serializer.annotations.Serialize;
+import io.activej.serializer.annotations.SerializeRecord;
 import io.activej.test.rules.ByteBufRule;
 import io.activej.test.rules.ClassBuilderConstantsRule;
 import io.activej.test.rules.EventloopRule;
@@ -283,10 +282,10 @@ public final class DiscoveryServiceTest {
 		boolean startsWithPrefix1 = false;
 		boolean startsWithPrefix2 = false;
 		for (String data : storage) {
-			if (data.startsWith("first")){
+			if (data.startsWith("first")) {
 				startsWithPrefix1 = true;
 			}
-			if (data.startsWith("second")){
+			if (data.startsWith("second")) {
 				startsWithPrefix2 = true;
 			}
 			if (startsWithPrefix1 && startsWithPrefix2) return;
@@ -297,7 +296,7 @@ public final class DiscoveryServiceTest {
 	private static void request(RpcClient rpcClient, String data) throws Exception {
 		try {
 			rpcClient.getEventloop().submit(
-					() -> rpcClient.<SimpleRequest, Void>sendRequest(new SimpleRequest(data)))
+							() -> rpcClient.<SimpleRequest, Void>sendRequest(new SimpleRequest(data)))
 					.get();
 		} catch (ExecutionException e) {
 			//noinspection ThrowInsideCatchBlockWhichIgnoresCaughtException - cause is rethrown
@@ -305,14 +304,8 @@ public final class DiscoveryServiceTest {
 		}
 	}
 
-	public static final class SimpleRequest {
-		@Serialize
-		public final String data;
-
-		public SimpleRequest(@Deserialize("data") String data) {
-			this.data = data;
-		}
-	}
+	@SerializeRecord
+	public record SimpleRequest(String data) {}
 
 	public static final class VoidResponse {
 	}

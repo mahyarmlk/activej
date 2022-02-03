@@ -286,17 +286,7 @@ public final class CrdtStorageFs<K extends Comparable<K>, S> implements CrdtStor
 				.whenComplete(consolidationStats.recordStats());
 	}
 
-	static class CrdtReducingData<K extends Comparable<K>, S> {
-		final K key;
-		final @Nullable S state;
-		final long timestamp;
-
-		CrdtReducingData(K key, @Nullable S state, long timestamp) {
-			this.key = key;
-			this.state = state;
-			this.timestamp = timestamp;
-		}
-	}
+	record CrdtReducingData<K extends Comparable<K>, S>(K key, @Nullable S state, long timestamp) {}
 
 	static class CrdtAccumulator<S> {
 		@Nullable S state;

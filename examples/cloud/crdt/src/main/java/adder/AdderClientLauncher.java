@@ -44,10 +44,10 @@ public final class AdderClientLauncher extends CrdtRpcClientLauncher {
 		int shardsCount = addresses.size();
 		return item -> {
 			if (item instanceof AddRequest) {
-				return (int) (((AddRequest) item).getUserId() % shardsCount);
+				return (int) (((AddRequest) item).userId() % shardsCount);
 			}
 			assert item instanceof GetRequest;
-			return (int) (((GetRequest) item).getUserId() % shardsCount);
+			return (int) (((GetRequest) item).userId() % shardsCount);
 		};
 	}
 
@@ -82,7 +82,7 @@ public final class AdderClientLauncher extends CrdtRpcClientLauncher {
 					long id = Long.parseLong(parts[1]);
 					GetResponse getResponse = eventloop.submit(() -> client.
 							<GetRequest, GetResponse>sendRequest(new GetRequest(id))).get();
-					System.out.println("---> " + getResponse.getSum());
+					System.out.println("---> " + getResponse.sum());
 				} else {
 					throw new MalformedDataException("Unknown command: " + parts[0]);
 				}

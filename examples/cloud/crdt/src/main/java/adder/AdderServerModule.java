@@ -47,13 +47,13 @@ public class AdderServerModule extends AbstractModule {
 	) {
 		return Map.of(
 				AddRequest.class, (RpcRequestHandler<AddRequest, AddResponse>) request -> {
-					long userId = request.getUserId();
+					long userId = request.userId();
 					return seqExecutor.execute(userId, () -> map.get(userId)
 							.then(state -> {
-								float newSum = request.getDelta() +
+								float newSum = request.delta() +
 										(state == null ?
 												0 :
-												state.getLocalSum());
+												state.localSum());
 
 								return writeAheadLog.put(userId, DetailedSumsCrdtState.of(serverId, newSum))
 										.then(() -> map.put(userId, SimpleSumsCrdtState.of(newSum)))
@@ -61,7 +61,7 @@ public class AdderServerModule extends AbstractModule {
 							}));
 				},
 				GetRequest.class, (RpcRequestHandler<GetRequest, GetResponse>) request1 ->
-						map.get(request1.getUserId())
+						map.get(request1.userId())
 								.mapIfNonNull(SimpleSumsCrdtState::value)
 								.mapIfNull(() -> 0f)
 								.map(GetResponse::new));
