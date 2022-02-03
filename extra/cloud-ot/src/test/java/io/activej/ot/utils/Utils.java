@@ -70,11 +70,11 @@ public class Utils {
 
 				TestOp result;
 				switch (key) {
-					case "add":
+					case "add" -> {
 						reader.getNextToken();
 						result = new TestAdd(deserializeInt(reader));
-						break;
-					case "set":
+					}
+					case "set" -> {
 						reader.startArray();
 						reader.getNextToken();
 						int prev = deserializeInt(reader);
@@ -85,9 +85,8 @@ public class Utils {
 						int next = deserializeInt(reader);
 						reader.endArray();
 						result = new TestSet(prev, next);
-						break;
-					default:
-						throw reader.newParseError("Invalid TestOp key: " + key);
+					}
+					default -> throw reader.newParseError("Invalid TestOp key: " + key);
 				}
 				reader.endObject();
 				return result;

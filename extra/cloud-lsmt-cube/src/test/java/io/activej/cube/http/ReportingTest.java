@@ -121,14 +121,11 @@ public final class ReportingTest extends CubeTestBase {
 
 		@Override
 		public @Nullable String resolveAttributes(Integer key) {
-			switch (key) {
-				case 1:
-					return "first";
-				case 3:
-					return "third";
-				default:
-					return null;
-			}
+			return switch (key) {
+				case 1 -> "first";
+				case 3 -> "third";
+				default -> null;
+			};
 		}
 	}
 
