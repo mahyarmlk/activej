@@ -112,9 +112,9 @@ public final class TestCrdtCluster {
 		for (int i = 0; i < CLIENT_SERVER_PAIRS; i++) {
 			CrdtStorageMap<String, TimestampContainer<Set<Integer>>> storage = CrdtStorageMap.create(eventloop, union);
 
-			storage.put(key1, TimestampContainer.now(new HashSet<>(Set.of(i))));
-			storage.put(key2, TimestampContainer.now(new HashSet<>(Set.of(i / 2))));
-			storage.put(key3, TimestampContainer.now(new HashSet<>(Set.of(123))));
+			storage.put(key1, TimestampContainer.now(Set.of(i)));
+			storage.put(key2, TimestampContainer.now(Set.of(i / 2)));
+			storage.put(key3, TimestampContainer.now(Set.of(123)));
 
 			InetSocketAddress address = new InetSocketAddress(getFreePort());
 			CrdtServer<String, TimestampContainer<Set<Integer>>> server = CrdtServer.create(eventloop, storage, serializer);
