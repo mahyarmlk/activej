@@ -74,7 +74,7 @@ public class AdderServerModule extends AbstractModule {
 
 	@Provides
 	CrdtFunction<DetailedSumsCrdtState> function() {
-		return new CrdtFunction<DetailedSumsCrdtState>() {
+		return new CrdtFunction<>() {
 			@Override
 			public DetailedSumsCrdtState merge(DetailedSumsCrdtState first, DetailedSumsCrdtState second) {
 				return first.merge(second);

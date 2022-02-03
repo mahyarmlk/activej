@@ -40,7 +40,7 @@ public class Utils {
 		throw new AssertionError();
 	};
 
-	private static final Iterator<Object> EMPTY_ITERATOR = new Iterator<Object>() {
+	private static final Iterator<Object> EMPTY_ITERATOR = new Iterator<>() {
 		@Override
 		public boolean hasNext() {
 			return false;
@@ -216,7 +216,7 @@ public class Utils {
 	}
 
 	public static <T> Iterator<T> iteratorOf(T item) {
-		return new Iterator<T>() {
+		return new Iterator<>() {
 			boolean hasNext = true;
 
 			@Override
@@ -234,7 +234,7 @@ public class Utils {
 	}
 
 	public static <T> Iterator<T> iteratorOf(T item1, T item2) {
-		return new Iterator<T>() {
+		return new Iterator<>() {
 			int i = 0;
 
 			@Override
@@ -252,7 +252,7 @@ public class Utils {
 
 	@SafeVarargs
 	public static <T> Iterator<T> iteratorOf(T... items) {
-		return new Iterator<T>() {
+		return new Iterator<>() {
 			int i = 0;
 
 			@Override
@@ -269,7 +269,7 @@ public class Utils {
 	}
 
 	public static <T, R> Iterator<R> transformIterator(Iterator<? extends T> iterator, Function<? super T, ? extends R> fn) {
-		return new Iterator<R>() {
+		return new Iterator<>() {
 			@Override
 			public boolean hasNext() {
 				return iterator.hasNext();
@@ -295,7 +295,7 @@ public class Utils {
 	}
 
 	private static <T> Iterator<T> concatImpl(Iterator<? extends Iterator<? extends T>> iterators) {
-		return new Iterator<T>() {
+		return new Iterator<>() {
 			@Nullable Iterator<? extends T> it = iterators.hasNext() ? iterators.next() : null;
 
 			@Override
@@ -325,7 +325,7 @@ public class Utils {
 
 	public static <T> Stream<T> iterate(T seed, @NotNull Predicate<? super T> hasNext, @NotNull UnaryOperator<T> f) {
 		return StreamSupport.stream(Spliterators.spliteratorUnknownSize(
-				new Iterator<T>() {
+				new Iterator<>() {
 					T item = seed;
 
 					@Override

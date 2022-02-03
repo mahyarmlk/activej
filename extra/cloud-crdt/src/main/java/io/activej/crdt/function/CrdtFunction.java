@@ -53,7 +53,7 @@ public interface CrdtFunction<S> {
 	@Nullable S extract(S state, long timestamp);
 
 	static <S extends CrdtType<S>> CrdtFunction<S> ofCrdtType() {
-		return new CrdtFunction<S>() {
+		return new CrdtFunction<>() {
 			@Override
 			public S merge(S first, S second) {
 				return first.merge(second);

@@ -58,7 +58,7 @@ import static java.util.stream.Collectors.toList;
 public final class ConfigConverters {
 
 	public static ConfigConverter<LocalDate> ofLocalDate() {
-		return new SimpleConfigConverter<LocalDate>() {
+		return new SimpleConfigConverter<>() {
 			@Override
 			protected LocalDate fromString(String string) {
 				return LocalDate.parse(string);
@@ -72,7 +72,7 @@ public final class ConfigConverters {
 	}
 
 	public static ConfigConverter<LocalTime> ofLocalTime() {
-		return new SimpleConfigConverter<LocalTime>() {
+		return new SimpleConfigConverter<>() {
 			@Override
 			protected LocalTime fromString(String string) {
 				return LocalTime.parse(string);
@@ -86,7 +86,7 @@ public final class ConfigConverters {
 	}
 
 	public static ConfigConverter<LocalDateTime> ofLocalDateTime() {
-		return new SimpleConfigConverter<LocalDateTime>() {
+		return new SimpleConfigConverter<>() {
 			@Override
 			protected LocalDateTime fromString(String string) {
 				return StringFormatUtils.parseLocalDateTime(string);
@@ -100,7 +100,7 @@ public final class ConfigConverters {
 	}
 
 	public static ConfigConverter<Period> ofPeriod() {
-		return new SimpleConfigConverter<Period>() {
+		return new SimpleConfigConverter<>() {
 			@Override
 			protected Period fromString(String string) {
 				return StringFormatUtils.parsePeriod(string);
@@ -121,7 +121,7 @@ public final class ConfigConverters {
 	}
 
 	public static ConfigConverter<Duration> ofDuration() {
-		return new SimpleConfigConverter<Duration>() {
+		return new SimpleConfigConverter<>() {
 			@Override
 			protected Duration fromString(String string) {
 				return StringFormatUtils.parseDuration(string);
@@ -142,7 +142,7 @@ public final class ConfigConverters {
 	}
 
 	public static ConfigConverter<Instant> ofInstant() {
-		return new SimpleConfigConverter<Instant>() {
+		return new SimpleConfigConverter<>() {
 			@Override
 			protected Instant fromString(String string) {
 				return StringFormatUtils.parseInstant(string);
@@ -163,7 +163,7 @@ public final class ConfigConverters {
 	}
 
 	public static ConfigConverter<String> ofString() {
-		return new ConfigConverter<String>() {
+		return new ConfigConverter<>() {
 			@Override
 			public String get(Config config, String defaultValue) {
 				return config.getValue(defaultValue);
@@ -177,7 +177,7 @@ public final class ConfigConverters {
 	}
 
 	public static ConfigConverter<Byte> ofByte() {
-		return new SimpleConfigConverter<Byte>() {
+		return new SimpleConfigConverter<>() {
 			@Override
 			protected Byte fromString(String string) {
 				return Byte.valueOf(string);
@@ -191,7 +191,7 @@ public final class ConfigConverters {
 	}
 
 	public static ConfigConverter<Integer> ofInteger() {
-		return new SimpleConfigConverter<Integer>() {
+		return new SimpleConfigConverter<>() {
 			@Override
 			protected Integer fromString(String string) {
 				return Integer.valueOf(string);
@@ -205,7 +205,7 @@ public final class ConfigConverters {
 	}
 
 	public static ConfigConverter<Long> ofLong() {
-		return new SimpleConfigConverter<Long>() {
+		return new SimpleConfigConverter<>() {
 			@Override
 			public Long fromString(String string) {
 				return Long.parseLong(string);
@@ -219,7 +219,7 @@ public final class ConfigConverters {
 	}
 
 	public static ConfigConverter<Float> ofFloat() {
-		return new SimpleConfigConverter<Float>() {
+		return new SimpleConfigConverter<>() {
 			@Override
 			public Float fromString(String string) {
 				return Float.parseFloat(string);
@@ -233,7 +233,7 @@ public final class ConfigConverters {
 	}
 
 	public static ConfigConverter<Double> ofDouble() {
-		return new SimpleConfigConverter<Double>() {
+		return new SimpleConfigConverter<>() {
 			@Override
 			public Double fromString(String string) {
 				return Double.parseDouble(string);
@@ -247,7 +247,7 @@ public final class ConfigConverters {
 	}
 
 	public static ConfigConverter<Boolean> ofBoolean() {
-		return new SimpleConfigConverter<Boolean>() {
+		return new SimpleConfigConverter<>() {
 			@Override
 			public Boolean fromString(String string) {
 				return Boolean.parseBoolean(string);
@@ -262,7 +262,7 @@ public final class ConfigConverters {
 
 	public static <E extends Enum<E>> SimpleConfigConverter<E> ofEnum(Class<E> enumClass) {
 		Class<E> enumClass1 = enumClass;
-		return new SimpleConfigConverter<E>() {
+		return new SimpleConfigConverter<>() {
 			private final Class<E> enumClass = enumClass1;
 
 			@Override
@@ -278,7 +278,7 @@ public final class ConfigConverters {
 	}
 
 	public static ConfigConverter<Class<?>> ofClass() {
-		return new SimpleConfigConverter<Class<?>>() {
+		return new SimpleConfigConverter<>() {
 			@Override
 			public Class<?> fromString(String string) {
 				try {
@@ -296,7 +296,7 @@ public final class ConfigConverters {
 	}
 
 	public static ConfigConverter<InetAddress> ofInetAddress() {
-		return new SimpleConfigConverter<InetAddress>() {
+		return new SimpleConfigConverter<>() {
 			@Override
 			public InetAddress fromString(String address) {
 				try {
@@ -314,7 +314,7 @@ public final class ConfigConverters {
 	}
 
 	public static ConfigConverter<InetSocketAddress> ofInetSocketAddress() {
-		return new SimpleConfigConverter<InetSocketAddress>() {
+		return new SimpleConfigConverter<>() {
 			@Override
 			public InetSocketAddress fromString(String addressPort) {
 				try {
@@ -332,7 +332,7 @@ public final class ConfigConverters {
 	}
 
 	public static ConfigConverter<Path> ofPath() {
-		return new SimpleConfigConverter<Path>() {
+		return new SimpleConfigConverter<>() {
 			@Override
 			protected Path fromString(String string) {
 				return Paths.get(string);
@@ -346,7 +346,7 @@ public final class ConfigConverters {
 	}
 
 	public static ConfigConverter<MemSize> ofMemSize() {
-		return new SimpleConfigConverter<MemSize>() {
+		return new SimpleConfigConverter<>() {
 			@Override
 			public MemSize fromString(String string) {
 				return MemSize.valueOf(string);
@@ -374,7 +374,7 @@ public final class ConfigConverters {
 	}
 
 	public static <T> ConfigConverter<List<T>> ofList(ConfigConverter<T> elementConverter, CharSequence separators) {
-		return new SimpleConfigConverter<List<T>>() {
+		return new SimpleConfigConverter<>() {
 			private final Pattern pattern = compile(separators.chars()
 					.mapToObj(c -> "\\" + (char) c)
 					.collect(joining("", "[", "]")));
@@ -409,7 +409,7 @@ public final class ConfigConverters {
 
 	// compound
 	public static ConfigConverter<ServerSocketSettings> ofServerSocketSettings() {
-		return new ComplexConfigConverter<ServerSocketSettings>(ServerSocketSettings.create(DEFAULT_BACKLOG)) {
+		return new ComplexConfigConverter<>(ServerSocketSettings.create(DEFAULT_BACKLOG)) {
 			@Override
 			protected ServerSocketSettings provide(Config config, ServerSocketSettings defaultValue) {
 				return Function.<ServerSocketSettings>identity()
@@ -430,7 +430,7 @@ public final class ConfigConverters {
 	}
 
 	public static ConfigConverter<SocketSettings> ofSocketSettings() {
-		return new ComplexConfigConverter<SocketSettings>(SocketSettings.create()) {
+		return new ComplexConfigConverter<>(SocketSettings.create()) {
 			@Override
 			protected SocketSettings provide(Config config, SocketSettings defaultValue) {
 				return Function.<SocketSettings>identity()
@@ -475,7 +475,7 @@ public final class ConfigConverters {
 	}
 
 	public static ConfigConverter<DatagramSocketSettings> ofDatagramSocketSettings() {
-		return new ComplexConfigConverter<DatagramSocketSettings>(DatagramSocketSettings.create()) {
+		return new ComplexConfigConverter<>(DatagramSocketSettings.create()) {
 			@Override
 			protected DatagramSocketSettings provide(Config config, DatagramSocketSettings defaultValue) {
 				return Function.<DatagramSocketSettings>identity()
@@ -503,7 +503,7 @@ public final class ConfigConverters {
 	public static final ConfigConverter<List<Class<?>>> OF_CLASSES = ofList(ofClass());
 
 	public static ConfigConverter<FatalErrorHandler> ofFatalErrorHandler() {
-		return new ConfigConverter<FatalErrorHandler>() {
+		return new ConfigConverter<>() {
 			@Override
 			public @NotNull FatalErrorHandler get(Config config) {
 				switch (config.getValue()) {
@@ -571,7 +571,7 @@ public final class ConfigConverters {
 	}
 
 	public static ConfigConverter<Schedule> ofEventloopTaskSchedule() {
-		return new ConfigConverter<Schedule>() {
+		return new ConfigConverter<>() {
 			@Override
 			public @NotNull Schedule get(Config config) {
 				return switch (config.get("type")) {
@@ -595,7 +595,7 @@ public final class ConfigConverters {
 
 	@SuppressWarnings("rawtypes")
 	public static ConfigConverter<RetryPolicy> ofRetryPolicy() {
-		return new ConfigConverter<RetryPolicy>() {
+		return new ConfigConverter<>() {
 			@Override
 			public @NotNull RetryPolicy get(Config config) {
 				if (!config.hasValue() || config.getValue().equals("no")) {
@@ -631,7 +631,7 @@ public final class ConfigConverters {
 	}
 
 	public static ConfigConverter<ThrottlingController> ofThrottlingController() {
-		return new ComplexConfigConverter<ThrottlingController>(ThrottlingController.create()) {
+		return new ComplexConfigConverter<>(ThrottlingController.create()) {
 			@Override
 			protected ThrottlingController provide(Config config, ThrottlingController defaultValue) {
 				return ThrottlingController.create()
@@ -677,7 +677,7 @@ public final class ConfigConverters {
 	}
 
 	public static ConfigConverter<ExecutorService> ofExecutor() {
-		return new ConfigConverter<ExecutorService>() {
+		return new ConfigConverter<>() {
 			@Override
 			public @NotNull ExecutorService get(Config config) {
 				return getExecutor(config);

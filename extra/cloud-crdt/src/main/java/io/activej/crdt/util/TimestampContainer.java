@@ -71,7 +71,7 @@ public final class TimestampContainer<S> {
 	}
 
 	public static <S> CrdtFunction<TimestampContainer<S>> createCrdtFunction(BinaryOperator<S> combiner) {
-		return new CrdtFunction<TimestampContainer<S>>() {
+		return new CrdtFunction<>() {
 			@Override
 			public TimestampContainer<S> merge(TimestampContainer<S> first, TimestampContainer<S> second) {
 				return new TimestampContainer<>(Math.max(first.getTimestamp(), second.getTimestamp()), combiner.apply(first.getState(), second.getState()));
@@ -88,7 +88,7 @@ public final class TimestampContainer<S> {
 	}
 
 	public static <S> BinarySerializer<TimestampContainer<S>> createSerializer(BinarySerializer<S> stateSerializer) {
-		return new BinarySerializer<TimestampContainer<S>>() {
+		return new BinarySerializer<>() {
 			@Override
 			public void encode(BinaryOutput out, TimestampContainer<S> item) {
 				out.writeLong(item.getTimestamp());

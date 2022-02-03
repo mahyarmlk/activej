@@ -296,7 +296,7 @@ public final class CrdtStorageCluster<K extends Comparable<K>, S, P extends Comp
 		for (Container<StreamSupplier<CrdtData<K, S>>> container : containers) {
 			Reducer<K, CrdtData<K, S>, CrdtData<K, S>, CrdtData<K, S>> reducer = filter == null ?
 					new BinaryAccumulatorReducer<>((a, b) -> new CrdtData<>(a.getKey(), function.merge(a.getState(), b.getState()))) :
-					new BinaryAccumulatorReducer<K, CrdtData<K, S>>((a, b) -> new CrdtData<>(a.getKey(), function.merge(a.getState(), b.getState()))) {
+					new BinaryAccumulatorReducer<>((a, b) -> new CrdtData<>(a.getKey(), function.merge(a.getState(), b.getState()))) {
 						@Override
 						protected boolean filter(CrdtData<K, S> value) {
 							return filter.test(value.getState());

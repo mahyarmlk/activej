@@ -21,7 +21,7 @@ public class CrdtFileServerLauncherTest {
 		new CrdtFileServerLauncher<String, TimestampContainer<Integer>>() {
 			@Override
 			protected CrdtFileServerLogicModule<String, TimestampContainer<Integer>> getBusinessLogicModule() {
-				return new CrdtFileServerLogicModule<String, TimestampContainer<Integer>>() {};
+				return new CrdtFileServerLogicModule<>() {};
 			}
 
 			@Provides

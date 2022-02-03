@@ -51,7 +51,7 @@ public class BannerServerModule extends AbstractModule {
 
 	@Provides
 	CrdtFunction<GSet<Integer>> function() {
-		return new CrdtFunction<GSet<Integer>>() {
+		return new CrdtFunction<>() {
 			@Override
 			public GSet<Integer> merge(GSet<Integer> first, GSet<Integer> second) {
 				return first.merge(second);
