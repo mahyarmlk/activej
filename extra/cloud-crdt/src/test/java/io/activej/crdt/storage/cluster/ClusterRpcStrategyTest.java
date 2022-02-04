@@ -236,6 +236,62 @@ public class ClusterRpcStrategyTest {
 		}
 	}
 
+	@Test
+	public void testRpcStrategySameIds() throws Exception {
+		Set<String> partitionIds = union(PARTITION_ADDRESS_MAP_1.keySet(), PARTITION_ADDRESS_MAP_2.keySet());
+
+		PartitionScheme<String> partitionScheme = RendezvousPartitionScheme.<String>create()
+				.withPartitionGroup(RendezvousPartitionGroup.create(PARTITION_ADDRESS_MAP_1.keySet(), 2, true, true))
+				.withPartitionGroup(RendezvousPartitionGroup.create(PARTITION_ADDRESS_MAP_2.keySet(), 2, true, true));
+
+		List<String> alivePartitions = new ArrayList<>(difference(partitionIds, setOf("two", "seven", "nine")));
+
+		Map<String, InetSocketAddress> partition2Address = new HashMap<>();
+		partition2Address.putAll(PARTITION_ADDRESS_MAP_1);
+		partition2Address.putAll(PARTITION_ADDRESS_MAP_2);
+
+		Map<InetSocketAddress, String> address2Partitions = partition2Address.entrySet()
+				.stream()
+				.collect(toMap(Map.Entry::getValue, Map.Entry::getKey));
+
+		RpcClientConnectionPoolStub poolStub = new RpcClientConnectionPoolStub();
+		for (String alivePartition : alivePartitions) {
+			poolStub.put(partition2Address.get(alivePartition), new RpcSenderStub());
+		}
+
+		RpcStrategy rpcStrategy = partitionScheme.createRpcStrategy(partition -> server(partition2Address.get(partition)), KEY_GETTER);
+
+		RpcSender sender = rpcStrategy.createSender(poolStub);
+		assertNotNull(sender);
+
+		Sharder<Integer> sharder = partitionScheme.createSharder(alivePartitions);
+		assertNotNull(sharder);
+
+		for (int i = 0; i < 1000; i++) {
+			int[] partitionsIndexes = sharder.shard(i);
+			Set<String> partitions = Arrays.stream(partitionsIndexes)
+					.mapToObj(alivePartitions::get)
+					.collect(toSet());
+
+			sendRequest(sender, i);
+
+			boolean asserted = false;
+			for (Map.Entry<InetSocketAddress, RpcSender> entry : poolStub.connections.entrySet()) {
+				RpcSenderStub rpcSender = (RpcSenderStub) entry.getValue();
+				Integer count = rpcSender.counters.get(i);
+				if (count == null) continue;
+
+				assertEquals(1, count.intValue());
+				String partition = address2Partitions.get(entry.getKey());
+				assertTrue(partitions.contains(partition));
+				assertFalse(asserted);
+				asserted = true;
+			}
+
+			assertTrue(asserted);
+		}
+	}
+
 	private static void sendRequest(RpcSender sender, int request) throws Exception {
 		RefBoolean sent = new RefBoolean(false);
 		Ref<Exception> exceptionRef = new Ref<>(null);

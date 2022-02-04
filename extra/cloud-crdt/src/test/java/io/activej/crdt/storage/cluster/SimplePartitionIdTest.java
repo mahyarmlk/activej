@@ -13,9 +13,10 @@ public class SimplePartitionIdTest {
 
 	@Test
 	public void testLocalEquality() {
+		String partitioningId = "partitioningA";
 		String id = "test";
-		SimplePartitionId localPartitionId = SimplePartitionId.of(id, null, null);
-		SimplePartitionId partitionId = SimplePartitionId.of(id, address(9000), address(9001));
+		SimplePartitionId localPartitionId = SimplePartitionId.of(partitioningId, id, null, null);
+		SimplePartitionId partitionId = SimplePartitionId.of(partitioningId, id, address(9000), address(9001));
 
 		assertEquals(localPartitionId, partitionId);
 		assertEquals(localPartitionId.hashCode(), partitionId.hashCode());
@@ -23,16 +24,16 @@ public class SimplePartitionIdTest {
 
 	@Test
 	public void testParse() {
-		doTestParse("test||", SimplePartitionId.of("test", null, null));
-		doTestParse("test|255.255.255.255:9000|", SimplePartitionId.ofCrdtAddress("test", address(9000)));
-		doTestParse("test||255.255.255.255:9000", SimplePartitionId.ofRpcAddress("test", address(9000)));
-		doTestParse("test|255.255.255.255:9000|255.255.255.255:9001", SimplePartitionId.of("test", address(9000), address(9001)));
+		doTestParse("partitioningA|test||", SimplePartitionId.of("partitioningA", "test", null, null));
+		doTestParse("partitioningA|test|255.255.255.255:9000|", SimplePartitionId.ofCrdtAddress("partitioningA", "test", address(9000)));
+		doTestParse("partitioningA|test||255.255.255.255:9000", SimplePartitionId.ofRpcAddress("partitioningA", "test", address(9000)));
+		doTestParse("partitioningA|test|255.255.255.255:9000|255.255.255.255:9001", SimplePartitionId.of("partitioningA", "test", address(9000), address(9001)));
 	}
 
 	@Test
 	public void testParseTolerant() {
-		doTestParse(SimplePartitionId.of("test", null, null), "test");
-		doTestParse(SimplePartitionId.ofCrdtAddress("test", address(9000)), "test|255.255.255.255:9000");
+		doTestParse(SimplePartitionId.of("partitioningA","test", null, null), "partitioningA|test");
+		doTestParse(SimplePartitionId.ofCrdtAddress("partitioningA", "test", address(9000)), "partitioningA|test|255.255.255.255:9000");
 	}
 
 	private void doTestParse(String expectedString, SimplePartitionId simplePartitionId) {

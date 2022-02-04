@@ -36,19 +36,19 @@ import static io.activej.config.converter.ConfigConverters.*;
 public final class ConfigConverters {
 
 	/**
-	 * @see #ofRendezvousPartitionScheme(ConfigConverter, ToIntFunction)
+	 * @see #ofRendezvousPartitionScheme(ConfigConverter, ToIntFunction, ToIntFunction)
 	 */
 	public static ConfigConverter<RendezvousPartitionScheme<SimplePartitionId>> ofRendezvousPartitionScheme() {
 		return ofRendezvousPartitionScheme(Objects::hashCode);
 	}
 
 	/**
-	 * @see #ofRendezvousPartitionScheme(ConfigConverter, ToIntFunction)
+	 * @see #ofRendezvousPartitionScheme(ConfigConverter, ToIntFunction, ToIntFunction)
 	 */
 	public static <K extends Comparable<K>> ConfigConverter<RendezvousPartitionScheme<SimplePartitionId>> ofRendezvousPartitionScheme(
 			@NotNull ToIntFunction<K> hashFn
 	) {
-		return ofRendezvousPartitionScheme(ofSimplePartitionId(), hashFn);
+		return ofRendezvousPartitionScheme(ofSimplePartitionId(), SimplePartitionId::idHashCode, hashFn);
 	}
 
 	/**
@@ -59,13 +59,15 @@ public final class ConfigConverters {
 	 */
 	public static <K extends Comparable<K>, P> ConfigConverter<RendezvousPartitionScheme<P>> ofRendezvousPartitionScheme(
 			@NotNull ConfigConverter<P> partitionIdConverter,
+			@NotNull ToIntFunction<P> partitionIdHashFn,
 			@NotNull ToIntFunction<K> hashFn
 	) {
-		return makeRendezvousPartitionScheme(partitionIdConverter, hashFn);
+		return makeRendezvousPartitionScheme(partitionIdConverter, partitionIdHashFn, hashFn);
 	}
 
 	private static <K extends Comparable<K>, P> ConfigConverter<RendezvousPartitionScheme<P>> makeRendezvousPartitionScheme(
 			@NotNull ConfigConverter<P> partitionIdConverter,
+			@NotNull ToIntFunction<P> partitionIdHashFn,
 			@NotNull ToIntFunction<K> hashFn
 	) {
 		return new ConfigConverter<RendezvousPartitionScheme<P>>() {
@@ -79,7 +81,8 @@ public final class ConfigConverters {
 				}
 
 				return RendezvousPartitionScheme.create(partitionGroups)
-						.withHashFn(hashFn);
+						.withHashFn(hashFn)
+						.withPartitionIdHashFn(partitionIdHashFn);
 			}
 
 			@Override

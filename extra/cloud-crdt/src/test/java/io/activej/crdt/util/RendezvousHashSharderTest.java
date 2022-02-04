@@ -25,6 +25,7 @@ public class RendezvousHashSharderTest {
 		Set<String> alive = new HashSet<>(partitionsWithIndexes.keySet());
 		RendezvousHashSharder<Integer, String> sharder1 = RendezvousHashSharder.create(
 				Object::hashCode,
+				Object::hashCode,
 				partitionsWithIndexes.keySet(), new ArrayList<>(alive), 3, false);
 
 		Map<Integer, Set<Integer>> sharded1 = new HashMap<>();
@@ -43,6 +44,7 @@ public class RendezvousHashSharderTest {
 		int fiveId = partitionsWithIndexes.remove("five");
 
 		RendezvousHashSharder<Integer, String> sharder2 = RendezvousHashSharder.create(
+				Object::hashCode,
 				Object::hashCode,
 				partitionsWithIndexes.keySet(), new ArrayList<>(alive), 3, false);
 
@@ -71,6 +73,7 @@ public class RendezvousHashSharderTest {
 		alive.remove("four");
 
 		RendezvousHashSharder<Integer, String> sharder3 = RendezvousHashSharder.create(
+				Object::hashCode,
 				Object::hashCode,
 				partitionsWithIndexes.keySet(), new ArrayList<>(alive), 3, true);
 
